@@ -20,8 +20,8 @@ class SearchService:
             print(f"Loading {MODEL_NAME} for search...")
             model = SentenceTransformer(MODEL_NAME)
             return model.encode
-        except ImportError:
-            print("WARNING: sentence-transformers not found. Using dummy embeddings for search.")
+        except (ImportError, OSError) as e:
+            print(f"WARNING: sentence-transformers not found or failed to load ({e}). Using dummy embeddings for search.")
             return lambda text: np.random.rand(384).astype(np.float32)
 
     def _load_embeddings(self):
@@ -73,10 +73,41 @@ class SearchService:
                     "name": row[0],
                     "description": row[1],
                     "type": res["type"],
+                    "entity_id": res["entity_id"],
                     "score": res["similarity"]
                 })
                 
         return enriched_results
+
+    def find_product_for_navigation(self, query, threshold=0.3):
+        """
+        Finds the best matching product for navigation.
+        Returns (product_name, line_id, score) or (None, None, 0) if below threshold.
+        """
+        results = self.search(query, top_k=1)
+        if not results:
+            return None, None, 0.0
+        
+        top_result = results[0]
+        if top_result['score'] < threshold:
+            return None, None, top_result['score']
+            
+        # We need the line_id. The search result has entity_id.
+        # If it's a product, we need its line_id. If it's a line, use its id.
+        cursor = self.conn.cursor()
+        line_id = None
+        
+        if top_result['type'] == 'line':
+            line_id = top_result['entity_id'] # entity_id is line id
+        else:
+            # It's a product, get its line_id
+            cursor.execute("SELECT line_id FROM products WHERE id = ?", (top_result['entity_id'],))
+            row = cursor.fetchone()
+            if row:
+                line_id = row[0]
+                
+        return top_result['name'], line_id, top_result['score']
+
 
     def close(self):
         self.conn.close()

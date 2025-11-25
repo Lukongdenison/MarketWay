@@ -41,14 +41,21 @@ class NavigationService:
 
     def find_product_line(self, product_name):
         """
-        Finds the line ID that sells the given product (exact match for MVP).
-        For semantic search, use SearchService.
+        Finds the line ID that sells the given product using Semantic Search.
         """
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT line_id, name FROM products WHERE name LIKE ?", (f"%{product_name}%",))
-        row = cursor.fetchone()
-        if row:
-            return row[0], row[1]
+        # Lazy import to avoid circular dependency if any, though here it's fine
+        from search_service import SearchService
+        
+        # We instantiate SearchService here. In a real app, this should be dependency injected or singleton.
+        # For this script, we'll create and close it.
+        search_service = SearchService(self.db_path)
+        name, line_id, score = search_service.find_product_for_navigation(product_name)
+        search_service.close()
+        
+        if line_id:
+            print(f"Found '{name}' with score {score:.2f}")
+            return line_id, name
+            
         return None, None
 
     def dijkstra(self, start_node, end_node):

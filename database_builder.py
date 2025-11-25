@@ -19,7 +19,7 @@ def get_embedding_model():
         print(f"Loading {MODEL_NAME}...")
         model = SentenceTransformer(MODEL_NAME)
         return model.encode
-    except Exception as e:
+    except (ImportError, OSError, Exception) as e:
         print(f"WARNING: sentence-transformers failed to load ({e}). Using dummy embeddings.")
         # Return a dummy function that returns a random vector of size 384 (MiniLM default)
         return lambda text: np.random.rand(384).astype(np.float32)
@@ -125,4 +125,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-print("Database built successfully.")
