@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+python-multipart
+tavily-python
+pypdf
+SpeechRecognition
+gTTS
+pillow
+numpy
+python-dotenv
+aiofiles
+requests
+pytest
+httpx

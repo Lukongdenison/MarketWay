@@ -1,0 +1,540 @@
+{
+  "info": {
+    "name": "MarketWay Navigator API",
+    "description": "Complete API collection for MarketWay Navigator - A smart market navigation system for Bamenda Main Market",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Questions & Search",
+      "item": [
+        {
+          "name": "Ask Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Where can I buy shoes?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ask",
+              "host": ["{{base_url}}"],
+              "path": ["ask"]
+            },
+            "description": "Ask general questions about the market, products, or history. The API searches local data first, then falls back to online search if needed."
+          },
+          "response": [
+            {
+              "name": "Success - Local Data",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"question\": \"Where can I buy shoes?\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/ask",
+                  "host": ["{{base_url}}"],
+                  "path": ["ask"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"answer\": \"Found 'shoes' in the following lines: Blessed Line, Victory Line, Wisdom Line, Godly Line.\",\n  \"source\": \"local\",\n  \"images\": [\n    \"/images/Blessed Lines.jpg\",\n    \"/images/Victory line.jpg\",\n    \"/images/wisdom line.jpg\",\n    \"/images/Godly Line.jpg\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/product/search?q=clothes",
+              "host": ["{{base_url}}"],
+              "path": ["product", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "clothes",
+                  "description": "Product name to search for"
+                }
+              ]
+            },
+            "description": "Search for products and find which market lines sell them."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/product/search?q=shoes",
+                  "host": ["{{base_url}}"],
+                  "path": ["product", "search"],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "shoes"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"query\": \"shoes\",\n  \"results\": [\n    {\n      \"line_name\": \"Blessed Line\",\n      \"items_sold\": [\"shoes\", \"boxes\", \"buckets\", \"kitchenutensils\"],\n      \"layout\": {\n        \"column\": \"right\",\n        \"order\": 4\n      }\n    },\n    {\n      \"line_name\": \"Victory Line\",\n      \"items_sold\": [\"beads\", \"jewelries\", \"clothes\", \"babystuff\", \"shoes\", \"wigs\", \"baggyjeans\", \"bodylotion\", \"schoolequipment\"],\n      \"layout\": {\n        \"column\": \"right\",\n        \"order\": 5\n      }\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints for asking questions and searching for products"
+    },
+    {
+      "name": "Market Lines",
+      "item": [
+        {
+          "name": "Get Line Information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/line/info/Victory Line",
+              "host": ["{{base_url}}"],
+              "path": ["line", "info", "Victory Line"]
+            },
+            "description": "Get detailed information about a specific market line including items sold, layout, and image."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/line/info/Victory Line",
+                  "host": ["{{base_url}}"],
+                  "path": ["line", "info", "Victory Line"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"line_name\": \"Victory Line\",\n  \"items_sold\": [\n    \"beads\",\n    \"jewelries\",\n    \"clothes\",\n    \"babystuff\",\n    \"shoes\",\n    \"wigs\",\n    \"baggyjeans\",\n    \"bodylotion\",\n    \"schoolequipment\"\n  ],\n  \"layout\": {\n    \"column\": \"right\",\n    \"order\": 5\n  },\n  \"image_url\": \"/images/Victory line.jpg\"\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/line/info/NonExistent Line",
+                  "host": ["{{base_url}}"],
+                  "path": ["line", "info", "NonExistent Line"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"detail\": \"Line not found\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Lines (via Search)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/product/search?q=",
+              "host": ["{{base_url}}"],
+              "path": ["product", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "",
+                  "description": "Empty query returns all lines"
+                }
+              ]
+            },
+            "description": "Use an empty search query to get all market lines (workaround since there's no dedicated endpoint)"
+          }
+        }
+      ],
+      "description": "Endpoints for getting information about market lines"
+    },
+    {
+      "name": "Navigation",
+      "item": [
+        {
+          "name": "Get Directions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/navigate?line_name=Victory Line",
+              "host": ["{{base_url}}"],
+              "path": ["navigate"],
+              "query": [
+                {
+                  "key": "line_name",
+                  "value": "Victory Line",
+                  "description": "Target line name"
+                }
+              ]
+            },
+            "description": "Get directions to a specific market line."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/navigate?line_name=Victory Line",
+                  "host": ["{{base_url}}"],
+                  "path": ["navigate"],
+                  "query": [
+                    {
+                      "key": "line_name",
+                      "value": "Victory Line"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"line_name\": \"Victory Line\",\n  \"directions\": \"Go to the RIGHT column, it's the 5th line on that side.\",\n  \"layout\": {\n    \"column\": \"right\",\n    \"order\": 5\n  }\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/navigate?line_name=Invalid Line",
+                  "host": ["{{base_url}}"],
+                  "path": ["navigate"],
+                  "query": [
+                    {
+                      "key": "line_name",
+                      "value": "Invalid Line"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"detail\": \"Line not found\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints for navigation and directions"
+    },
+    {
+      "name": "Market Information",
+      "item": [
+        {
+          "name": "Get Market History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/history",
+              "host": ["{{base_url}}"],
+              "path": ["history"]
+            },
+            "description": "Get historical information about Bamenda Main Market extracted from PDF."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/history",
+                  "host": ["{{base_url}}"],
+                  "path": ["history"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"history\": \"Bamenda Main Market, also known as Bamenda Central Market, is one of the largest and most vibrant markets in the North West Region of Cameroon...\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints for general market information"
+    },
+    {
+      "name": "Voice & Image",
+      "item": [
+        {
+          "name": "Voice Query",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Audio file (WAV, MP3, etc.)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/voice/query",
+              "host": ["{{base_url}}"],
+              "path": ["voice", "query"]
+            },
+            "description": "Submit a voice query and receive an audio response. Upload an audio file, it will be converted to text, processed, and returned as spoken audio (MP3)."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "query.wav"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/voice/query",
+                  "host": ["{{base_url}}"],
+                  "path": ["voice", "query"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "audio",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "audio/mpeg"
+                }
+              ],
+              "body": "[Binary audio data - MP3 file]"
+            },
+            {
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "unclear.wav"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/voice/query",
+                  "host": ["{{base_url}}"],
+                  "path": ["voice", "query"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"detail\": \"Could not understand audio\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Identify Product from Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Image file (JPG, PNG, etc.)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/image/identify",
+              "host": ["{{base_url}}"],
+              "path": ["image", "identify"]
+            },
+            "description": "Upload an image of a product to identify it and find matching market lines."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "product.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/image/identify",
+                  "host": ["{{base_url}}"],
+                  "path": ["image", "identify"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": "{\n  \"identified_product\": \"shoes\",\n  \"confidence\": 0.85,\n  \"matching_lines\": [\n    {\n      \"line_name\": \"Blessed Line\",\n      \"items_sold\": [\"shoes\", \"boxes\", \"buckets\", \"kitchenutensils\"]\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints for voice and image processing"
+    },
+    {
+      "name": "Example Queries",
+      "item": [
+        {
+          "name": "Find Medicine",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Where can I find medicine?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ask",
+              "host": ["{{base_url}}"],
+              "path": ["ask"]
+            }
+          }
+        },
+        {
+          "name": "Find Clothes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/product/search?q=clothes",
+              "host": ["{{base_url}}"],
+              "path": ["product", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "clothes"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Navigate to Fish Line",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/navigate?line_name=Fish Line",
+              "host": ["{{base_url}}"],
+              "path": ["navigate"],
+              "query": [
+                {
+                  "key": "line_name",
+                  "value": "Fish Line"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Mothers Line Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/line/info/Mothers Line",
+              "host": ["{{base_url}}"],
+              "path": ["line", "info", "Mothers Line"]
+            }
+          }
+        },
+        {
+          "name": "Ask About Market History",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Tell me about the history of Bamenda Main Market\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ask",
+              "host": ["{{base_url}}"],
+              "path": ["ask"]
+            }
+          }
+        }
+      ],
+      "description": "Pre-configured example queries for common use cases"
+    }
+  ]
+}
