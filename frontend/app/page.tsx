@@ -10,7 +10,7 @@ export default function Home() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
-            src="/friontmarket.jpg"
+            src="/frontmarket.jpg"
             alt="Sabi Market"
             fill
             style={{ objectFit: "cover" }}
@@ -30,8 +30,8 @@ export default function Home() {
               <p className="text-xl md:text-2xl text-slate-200 max-w-2xl mb-8 leading-relaxed">
                 AI-powered product discovery. Find exactly what you need, instantly.
               </p>
-              <Link href="/login">
-                <button className="group relative px-10 py-5 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-bold rounded-full text-xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(45,212,191,0.6)] active:scale-95">
+              <Link href="/chat">
+                <div className="group relative px-10 py-5 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-bold rounded-full text-xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(45,212,191,0.6)] active:scale-95 cursor-pointer">
                   <span className="relative z-10 flex items-center gap-3">
                     Get Started
                     <svg
@@ -49,7 +49,7 @@ export default function Home() {
                       />
                     </svg>
                   </span>
-                </button>
+                </div>
               </Link>
             </div>
           </div>

@@ -1,5 +1,5 @@
 """
-Router Service for MarketWay Chat
+Router Service for Sabi Market Chat
 Routes user queries to appropriate services (search or info)
 """
 
@@ -67,7 +67,7 @@ class RouterService:
                 - "Where can I find shoes?" -> {{"action": "search", "data": "shoes"}}
                 - "I need pharmacy" -> {{"action": "search", "data": "pharmacy"}}
                 - "Tell me about this market" -> {{"action": "info", "data": "market history"}}
-                - "What is MarketWay?" -> {{"action": "info", "data": "general info"}}
+                - "What is Sabi Market?" -> {{"action": "info", "data": "general info"}}
 
                 Rules:
                 - If asking WHERE/FIND/NEED/LOOKING FOR a product -> "search"

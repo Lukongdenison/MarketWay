@@ -24,12 +24,22 @@ export const useChat = () => {
         try {
             const response = await ChatService.sendMessage(text);
 
-            const botMessage: Message = {
-                id: (Date.now() + 1).toString(),
-                sender: 'bot',
-                text: response.direction,
-                image_url: response.name ? `http://127.0.0.1:8000/images/${response.name}.jpg` : undefined
-            };
+            let botMessage: Message;
+
+            if ('info' in response) {
+                botMessage = {
+                    id: (Date.now() + 1).toString(),
+                    sender: 'bot',
+                    text: response.info,
+                };
+            } else {
+                botMessage = {
+                    id: (Date.now() + 1).toString(),
+                    sender: 'bot',
+                    text: response.direction,
+                    image_url: response.name ? `http://127.0.0.1:8000/images/${response.name}.jpg` : undefined
+                };
+            }
 
             setMessages((prev) => [...prev, botMessage]);
         } catch (err) {

@@ -1,5 +1,5 @@
 """
-Navigation Service for MarketWay
+Navigation Service for Sabi Market
 Converts technical directions into human-friendly navigation instructions
 """
 
@@ -51,7 +51,7 @@ class NavigationService:
         
         try:
             prompt = f"""
-                You are a friendly market guide helping customers navigate MarketWay market.
+                You are a friendly market guide helping customers navigate Sabi Market.
 
                 Convert this technical direction into warm, conversational and brief easy-to-follow navigation instructions:
 
@@ -64,10 +64,10 @@ class NavigationService:
                 Order of one means on the specific aisle, the line is the first you meet on your right/left depending on the aisle
                 
                 Examples
-                1. direction: "Aisle 1, Position 2 (near the beginning of aisle 1)
+                1. direction: "Aisle 1, Position 2 (near the beginning of aisle 1)"
                 your response: "Enter through the main gate and walk straight down the aisle you see. The second line on your RIGHT is {line_name}, where you can find stalls selling {interest}"
                 
-                2.direction: "Aisle 2, Position 3 
+                2.direction: "Aisle 2, Position 3"
                 your response: "Enter through the main gate and make the first left turn. Walk straight ahead until you make a right turn into aisle2. The second line on your LEFT is {line_name}, where you can find stalls selling {interest}"
 
                 Instructions:

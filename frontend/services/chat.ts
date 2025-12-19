@@ -1,6 +1,6 @@
 import { ChatResponse } from '../types/chat';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'http://127.0.0.1:8080';
 
 export const ChatService = {
     async sendMessage(message: string): Promise<ChatResponse> {

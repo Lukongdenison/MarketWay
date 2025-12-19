@@ -5,7 +5,8 @@
         "items_sold": [
             "loin cloths",
             "accessories",
-            "jewelries"
+            "jewelries",
+            "shoes"
         ],
         "order": 1
     },
@@ -15,7 +16,7 @@
         "items_sold": [
             "shoes",
             "dresses",
-            "roomdecoitems",
+            "decoration items",
             "bags",
             "babystuff"
         ],
@@ -25,7 +26,7 @@
         "aisle": 1,
         "line_name": "wisdom line",
         "items_sold": [
-            "clothes",
+            "dresses",
             "bags",
             "shoes",
             "sleepers",
@@ -49,11 +50,10 @@
         "aisle": 1,
         "line_name": "universal line",
         "items_sold": [
-            "clothes",
-            "sleepers",
+            "dresses",
+            "slippers",
             "bags",
             "kitchenutensils",
-            "hair",
             "wigs"
         ],
         "order": 5
@@ -69,7 +69,7 @@
             "shoes",
             "wigs",
             "baggyjeans",
-            "bodylotion",
+            "cosmetics",
             "schoolequipment"
         ],
         "order": 6
@@ -81,7 +81,7 @@
             "shoes",
             "boxes",
             "buckets",
-            "kitchenutensils"
+            "kitchen utensils"
         ],
         "order": 7
     },
@@ -108,7 +108,9 @@
         "aisle": 1,
         "line_name": "fish line",
         "items_sold": [
-            "dryfish"
+            "dryfish",
+            "dry meat",
+            "ground spices"
         ],
         "order": 10
     },
@@ -116,7 +118,7 @@
         "aisle": 2,
         "line_name": "best line",
         "items_sold": [
-            "pharmacies",
+            "pharmacy",
             "clothes",
             "wine",
             "bodystuff"

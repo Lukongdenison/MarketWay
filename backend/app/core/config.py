@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 class Settings:
-    PROJECT_NAME: str = "MarketWay Navigator API"
+    PROJECT_NAME: str = "Sabi Market Navigator API"
     PROJECT_VERSION: str = "1.0.0"
     
     # Base path for data
