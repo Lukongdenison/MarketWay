@@ -8,7 +8,7 @@ from app.core.config import settings
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.PROJECT_VERSION,
-    description="Backend API for MarketWay Navigator"
+    description="Backend API for Sabi Market Navigator"
 )
 
 # CORS Middleware
@@ -26,11 +26,11 @@ app.mount("/images", StaticFiles(directory=settings.IMAGES_DIR), name="images")
 @app.get("/")
 async def root():
     return {
-        "message": "Welcome to MarketWay Navigator API",
+        "message": "Welcome to Sabi Market Navigator API",
         "docs": "/docs",
         "version": settings.PROJECT_VERSION
     }
 
 # Include routers
-from app.api import api
+from app.api.api import api
 app.include_router(api.router)
